@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobxgerencialistadetarefas/commonFunctions/openPage.dart';
 import 'package:mobxgerencialistadetarefas/widgets/customIconButton.dart';
 import 'package:mobxgerencialistadetarefas/widgets/customTextField.dart';
 import 'login.dart';
@@ -15,28 +16,27 @@ class _ListScreenState extends State<ListScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
-          margin: const EdgeInsets.fromLTRB(32, 0, 32, 32),
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: Column(
             children: <Widget>[
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 2),
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       'Tarefas',
                       style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 32),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 32,
+                      ),
                     ),
                     IconButton(
                       icon: Icon(Icons.exit_to_app),
                       color: Colors.white,
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
+                        CommonFunctions.openPage(context, Login());
                       },
                     ),
                   ],
@@ -67,7 +67,7 @@ class _ListScreenState extends State<ListScreen> {
                         Expanded(
                           child: ListView.separated(
                             itemCount: 10,
-                            itemBuilder: (_, index) {
+                            itemBuilder: (context, index) {
                               return ListTile(
                                 title: Text(
                                   'Item $index',
@@ -75,7 +75,7 @@ class _ListScreenState extends State<ListScreen> {
                                 onTap: () {},
                               );
                             },
-                            separatorBuilder: (_, __) {
+                            separatorBuilder: (context, index) {
                               return Divider();
                             },
                           ),

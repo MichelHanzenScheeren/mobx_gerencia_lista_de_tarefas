@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         cursorColor: Colors.deepPurpleAccent,
         scaffoldBackgroundColor: Colors.deepPurpleAccent,
       ),
-      home: LoginScreen(),
+      home: Login(),
     );
   }
 }
