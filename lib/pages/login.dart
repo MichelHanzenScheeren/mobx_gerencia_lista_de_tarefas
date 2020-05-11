@@ -17,14 +17,14 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.center,
-          margin: const EdgeInsets.all(32),
+          margin: const EdgeInsets.all(24),
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(24),
             ),
-            elevation: 16,
+            elevation: 24,
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
                     onChanged: (email) {},
                     enabled: true,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   CustomTextField(
                     hint: 'Senha',
                     prefix: Icon(Icons.lock),
@@ -44,17 +44,17 @@ class _LoginState extends State<Login> {
                     onChanged: (pass) {},
                     enabled: true,
                     suffix: CustomIconButton(
-                      radius: 32,
+                      radius: 24,
                       iconData: Icons.visibility,
                       onTap: () {},
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   SizedBox(
                     height: 48,
                     child: RaisedButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
+                        borderRadius: BorderRadius.circular(24),
                       ),
                       child: Text('Login', style: TextStyle(fontSize: 18)),
                       color: theme.primaryColor,
