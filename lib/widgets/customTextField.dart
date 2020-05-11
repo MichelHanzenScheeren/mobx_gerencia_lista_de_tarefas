@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({
-    this.hint,
-    this.prefix,
-    this.suffix,
-    this.obscure = false,
-    this.textInputType,
-    this.onChanged,
-    this.enabled,
-    this.controller,
-  });
-
   final TextEditingController controller;
   final String hint;
   final Widget prefix;
@@ -20,6 +9,17 @@ class CustomTextField extends StatelessWidget {
   final TextInputType textInputType;
   final Function(String) onChanged;
   final bool enabled;
+
+  CustomTextField({
+    this.hint: "",
+    this.prefix,
+    this.suffix,
+    this.obscure = false,
+    this.textInputType: TextInputType.text,
+    this.onChanged,
+    this.enabled: true,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
