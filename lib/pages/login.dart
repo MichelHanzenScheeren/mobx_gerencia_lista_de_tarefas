@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:mobxgerencialistadetarefas/commonFunctions/openPage.dart';
+import 'package:mobxgerencialistadetarefas/stores/loginStore.dart';
 import 'package:mobxgerencialistadetarefas/widgets/customIconButton.dart';
 import 'package:mobxgerencialistadetarefas/widgets/customTextField.dart';
-import 'toDoList.dart';
+import 'home.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,6 +13,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final LoginStore loginStore = LoginStore();
+  ReactionDisposer disposer;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    disposer = reaction((_) => loginStore.isLoggedIn, (isLoggedIn) {
+      if(isLoggedIn) CommonFunctions.openPage(context, Home());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -29,41 +43,59 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  CustomTextField(
-                    hint: 'E-mail',
-                    prefix: Icon(Icons.alternate_email),
-                    textInputType: TextInputType.emailAddress,
-                    onChanged: (email) {},
-                    enabled: true,
+                  Observer(
+                    builder: (_) {
+                      return CustomTextField(
+                        hint: 'E-mail',
+                        prefix: Icon(Icons.alternate_email),
+                        textInputType: TextInputType.emailAddress,
+                        onChanged: loginStore.setEmail,
+                        enabled: !loginStore.isLoading,
+                      );
+                    },
                   ),
                   const SizedBox(height: 24),
-                  CustomTextField(
-                    hint: 'Senha',
-                    prefix: Icon(Icons.lock),
-                    obscure: true,
-                    onChanged: (pass) {},
-                    enabled: true,
-                    suffix: CustomIconButton(
-                      radius: 24,
-                      iconData: Icons.visibility,
-                      onTap: () {},
-                    ),
+                  Observer(
+                    builder: (_) {
+                      return CustomTextField(
+                        hint: 'Senha',
+                        prefix: Icon(Icons.lock),
+                        obscure: loginStore.obscurePassword,
+                        onChanged: loginStore.setPassword,
+                        enabled: !loginStore.isLoading,
+                        suffix: CustomIconButton(
+                          radius: 24,
+                          iconData: loginStore.obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          onTap: loginStore.togglePasswordVisible,
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(height: 24),
-                  SizedBox(
-                    height: 48,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Text('Login', style: TextStyle(fontSize: 18)),
-                      color: theme.primaryColor,
-                      disabledColor: theme.primaryColor.withAlpha(100),
-                      textColor: Colors.white,
-                      onPressed: () {
-                        CommonFunctions.openPage(context, ListScreen());
-                      },
-                    ),
+                  Observer(
+                    builder: (_) {
+                      return SizedBox(
+                        height: 50,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: loginStore.isLoading
+                              ? CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      theme.primaryColor),
+                                )
+                              : Text('Login', style: TextStyle(fontSize: 18)),
+                          color: theme.primaryColor,
+                          disabledColor: theme.primaryColor.withOpacity(0.3),
+                          textColor: Colors.white,
+                          onPressed: loginStore.loginPress,
+                        ),
+                      );
+                    },
                   )
                 ],
               ),
@@ -73,4 +105,12 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    disposer();
+    super.dispose();
+  }
+
+
 }

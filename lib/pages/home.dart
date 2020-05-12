@@ -4,12 +4,12 @@ import 'package:mobxgerencialistadetarefas/widgets/customIconButton.dart';
 import 'package:mobxgerencialistadetarefas/widgets/customTextField.dart';
 import 'login.dart';
 
-class ListScreen extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _ListScreenState createState() => _ListScreenState();
+  _HomeState createState() => _HomeState();
 }
 
-class _ListScreenState extends State<ListScreen> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
