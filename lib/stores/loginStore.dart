@@ -35,8 +35,11 @@ abstract class _LoginStore with Store {
   Future<void> doLogin() async {
     toggleLoadingState(true);
     await Future.delayed(Duration(seconds: 2));
-    isLoggedIn = true;
     toggleLoadingState(false);
+    isLoggedIn = true;
+    email = "";
+    password = "";
+    obscurePassword = true;
   }
 
   @action
