@@ -5,6 +5,7 @@ import 'package:mobxgerencialistadetarefas/commonFunctions/openPage.dart';
 import 'package:mobxgerencialistadetarefas/stores/loginStore.dart';
 import 'package:mobxgerencialistadetarefas/widgets/customIconButton.dart';
 import 'package:mobxgerencialistadetarefas/widgets/customTextField.dart';
+import 'package:provider/provider.dart';
 import 'home.dart';
 
 class Login extends StatefulWidget {
@@ -13,11 +14,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final LoginStore loginStore = LoginStore();
+  LoginStore loginStore;
   ReactionDisposer disposer;
 
   @override
   void didChangeDependencies() {
+    loginStore = Provider.of<LoginStore>(context);
     super.didChangeDependencies();
     disposer = reaction((_) => loginStore.isLoggedIn, (isLoggedIn) {
       if(isLoggedIn) CommonFunctions.openPage(context, Home());

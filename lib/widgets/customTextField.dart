@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscure;
   final TextInputType textInputType;
   final Function(String) onChanged;
+  final Function onEditingComplete;
   final bool enabled;
 
   CustomTextField({
@@ -17,6 +18,7 @@ class CustomTextField extends StatelessWidget {
     this.obscure: false,
     this.textInputType: TextInputType.text,
     this.onChanged,
+    this.onEditingComplete,
     this.enabled: true,
     this.controller,
   });
@@ -36,6 +38,7 @@ class CustomTextField extends StatelessWidget {
         keyboardType: textInputType,
         onChanged: onChanged,
         enabled: enabled,
+        onEditingComplete: onEditingComplete,
         decoration: InputDecoration(
           hintText: hint,
           border: InputBorder.none,
